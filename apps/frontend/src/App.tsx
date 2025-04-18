@@ -18,6 +18,7 @@ import AddCourse from './pages/AddCourse.tsx';
 import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
+import { Lobby } from './pages/VCLobby.tsx';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -46,7 +47,13 @@ const App: React.FC = () => {
           <Route path="/addCourse" element={<AddCourse />} />
           <Route path="/myCourses" element={<MyCourses/>} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
+<<<<<<< HEAD
+
+
+          <Route path="/lobby" element={<Lobby/>} />
+=======
           <Route path="/teacherhome" element={<TeacherHome/>} />
+>>>>>>> 8d67a106475de4e42d5ebd2e2b41a8292e8afee6
         </Routes>
       </div>
 
