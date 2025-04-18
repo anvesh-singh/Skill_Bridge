@@ -10,6 +10,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
+import StudentProfile from './pages/StudentProfile'
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/studentprofile" element={<StudentProfile/>} />
         </Routes>
       </div>
 
