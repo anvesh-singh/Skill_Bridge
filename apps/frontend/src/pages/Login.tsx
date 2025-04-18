@@ -8,7 +8,7 @@ const Login = () => {
   const [isStudent, setIsStudent] = useState(true);
   const navigate = useNavigate();
   
-  const { setRole } = useAuth();  // Accessing setRole from context
+  const { setRole } = useAuth();  // Accessing setRole from context API
 
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
