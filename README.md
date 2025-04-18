@@ -45,7 +45,6 @@
 | 📄 | **Profile Management**  |  Personal details, skills expertise, learning interests, session history, and badges. . Limit your response to a maximum of 200 characters.|
 | 🔗 | **Content Creation**   |  Instructors can create sessions, upload resources (videos, documents) and define prerequisites.Students can view recorded lectures. Limit your response to a maximum of 200 characters.|
 | 🧩 | **Skill Tagging & AI Recommendations**     |  Use AI to auto-tag sessions and recommend similar skills based on user interests. Limit your response to a maximum of 200 characters.|
-| 🧪 | **Testing**        | The codebase does not include any significant testing strategies or tools. This could be improved by implementing unit tests and using testing frameworks such as Jest or React Testing Library. Limit your response to a maximum of 200 characters.       |
 | ⚡️  | **Live Sessions**    |  Host one-on-one or group sessions using real-time video communication. Limit your response to a maximum of 200 characters.|
 | 🔐 | **Resources and session uploading**       |  Option for viewing of recorded session  and resource sharing. Limit your response to a maximum of 200 characters.|
 | 🔀 | **Local Leaderboards**| Display user rankings based on session completions, feedback, or participation. Limit your response to a maximum of 200 characters.|
