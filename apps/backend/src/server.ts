@@ -3,11 +3,12 @@
 import express, { Request, Response }  from "express";
 import cors from "cors";
 import bodyparser from "body-parser";
-import router from "./routes/index";
+import mainrouter from "./routes/mainrouter";
 import dotenv from 'dotenv';
 import { spawn } from 'child_process';
 
 dotenv.config();
+
 const app = express();
 
 //****************************MLSERVER**********************************************
@@ -76,7 +77,7 @@ app.use(cors({
 }));
 
 app.use(bodyparser.json());
-app.use("/", router);
+app.use("/", mainrouter);
 app.listen(process.env.PORT, (err) => {
   if (err) console.log("error ocurred");
   console.log(`app is listening on port ${process.env.PORT}`);

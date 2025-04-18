@@ -1,11 +1,25 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, X, User } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Menu, X, User, LogOut } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Replace with actual auth state if needed
+const navigate = useNavigate();
+
+const handleLogout = () => {
+  setIsLoggedIn(false);
+  localStorage.removeItem('token'); // if you're storing a token
+  toast.success("Logged out successfully!");
+  navigate('/login');
+};
+ // Replace with your actual auth check
+
 
   const toggleMenu = () => setMenuOpen(!menuOpen)
+
+ 
 
   return (
     <nav className="bg-white shadow-md fixed w-full z-50 top-0">
@@ -25,19 +39,19 @@ const Navbar = () => {
             <Link to="/contact" className="text-gray-700 hover:text-indigo-600 transition font-medium">Contact</Link>
           </div>
 
-          {/* Right: Profile & Mobile Toggle */}
+          {/* Right: Icons */}
           <div className="flex items-center space-x-4">
             <Link to="/profile" className="hidden md:block">
               <User className="w-6 h-6 text-gray-700 hover:text-indigo-600 transition" />
             </Link>
+            {isLoggedIn && (
+  <button onClick={handleLogout} className="hidden md:block">
+    <LogOut className="w-6 h-6 text-gray-700 hover:text-red-500 transition" />
+  </button>
+)}
 
-            {/* Mobile Toggle */}
             <button className="md:hidden" onClick={toggleMenu}>
-              {menuOpen ? (
-                <X className="w-6 h-6 text-gray-700" />
-              ) : (
-                <Menu className="w-6 h-6 text-gray-700" />
-              )}
+              {menuOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
             </button>
           </div>
         </div>
@@ -51,6 +65,12 @@ const Navbar = () => {
           <Link to="/about" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">About</Link>
           <Link to="/contact" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">Contact</Link>
           <Link to="/profile" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">Profile</Link>
+          {isLoggedIn && (
+  <button onClick={() => { toggleMenu(); handleLogout(); }} className="w-full text-left text-gray-700 hover:text-red-500">
+    Logout
+  </button>
+)}
+
         </div>
       )}
     </nav>

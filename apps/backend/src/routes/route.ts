@@ -65,7 +65,7 @@ router.post('/signup', async (req, res) => {
   if (!email || !password || !firstName || !lastName || !phone) {
     return res.status(400).json({ msg: "All fields are required" });
   }
-
+  
   try {
     const existingUser = await UserModel.findOne({ email: email });
     if (existingUser) {
