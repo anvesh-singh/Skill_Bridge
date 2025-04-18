@@ -23,7 +23,7 @@ const Login = () => {
     if (isStudent) {
       navigate('/');  // Student → home
     } else {
-      navigate('/teacher-home');  // Teacher → teacher home page
+      navigate('/teacherhome');  // Teacher → teacher home page
     }
   };
 

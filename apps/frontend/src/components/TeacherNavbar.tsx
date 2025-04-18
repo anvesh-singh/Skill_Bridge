@@ -73,6 +73,7 @@ const handleLogout = () => {
 
           {/* Center: Menu */}
           <div className="hidden md:flex flex-1 justify-center space-x-8">
+            <Link to="/teacherhome" className="text-gray-700 hover:text-indigo-600 transition font-medium">Home</Link>
             <Link to="/addCourse" className="text-gray-700 hover:text-indigo-600 transition font-medium">Add Course</Link>
             <Link to="/myCourses" className="text-gray-700 hover:text-indigo-600 transition font-medium">My Courses</Link>
             <Link to="/about" className="text-gray-700 hover:text-indigo-600 transition font-medium">About</Link>
@@ -100,6 +101,7 @@ const handleLogout = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white px-4 pt-2 pb-4 space-y-2 shadow-md">
+        <Link to="/teacherhome" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">Home</Link> 
           <Link to="/addCourse" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">Add Course</Link>
           <Link to="/myCourses" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">My Courses</Link>
           <Link to="/about" onClick={toggleMenu} className="block text-gray-700 hover:text-indigo-600">About</Link>
