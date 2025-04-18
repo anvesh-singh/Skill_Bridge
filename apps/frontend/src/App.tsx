@@ -44,13 +44,16 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/course/:courseid" element={<CourseDetails />} />
-          <Route path="/teacher-home" element={<TeacherHome />} />
           <Route path="/addCourse" element={<AddCourse />} />
           <Route path="/myCourses" element={<MyCourses/>} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
+<<<<<<< HEAD
 
 
           <Route path="/lobby" element={<Lobby/>} />
+=======
+          <Route path="/teacherhome" element={<TeacherHome/>} />
+>>>>>>> 8d67a106475de4e42d5ebd2e2b41a8292e8afee6
         </Routes>
       </div>
 
