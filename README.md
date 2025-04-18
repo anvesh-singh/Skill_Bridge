@@ -41,16 +41,47 @@
 
 |    | Feature            | Description                                                                                                        |
 |----|--------------------|--------------------------------------------------------------------------------------------------------------------|
-| ⚙️ | **Architecture**   | The codebase follows a modular architectural pattern with separate directories for background, components, and content. The code utilizes React for building the UI components. Limit your response to a maximum of 200 characters.             |
-| 📄 | **Documentation**  | The repository includes a README file that provides a basic overview of the project and its dependencies. . Limit your response to a maximum of 200 characters.|
-| 🔗 | **Dependencies**   | The codebase relies on various external libraries and packages such as React, Node.js, MongoDB, Express.js, Flask, Tensorflow . It also includes packages for styling, UI components, and communication with external services. Limit your response to a maximum of 200 characters.|
-| 🧩 | **Modularity**     | The codebase is organized into separate directories and files for different functionalities, such as background, components, and content. This modular structure allows for easier maintenance and reusability of the code. Limit your response to a maximum of 200 characters.|
+| ⚙️ | **Registration & Authentication**   |  Social sign-ups (Google, Facebook, etc.), email/password registration, multi-factor authentication.Limit your response to a maximum of 200 characters.             |
+| 📄 | **Profile Management**  |  Personal details, skills expertise, learning interests, session history, and badges. . Limit your response to a maximum of 200 characters.|
+| 🔗 | **Content Creation**   |  Instructors can create sessions, upload resources (videos, documents) and define prerequisites.Students can view recorded lectures. Limit your response to a maximum of 200 characters.|
+| 🧩 | **Skill Tagging & AI Recommendations**     |  Use AI to auto-tag sessions and recommend similar skills based on user interests. Limit your response to a maximum of 200 characters.|
 | 🧪 | **Testing**        | The codebase does not include any significant testing strategies or tools. This could be improved by implementing unit tests and using testing frameworks such as Jest or React Testing Library. Limit your response to a maximum of 200 characters.       |
-| ⚡️  | **Performance**    | The performance of the system would depend on factors such as the browser and hardware being used. However, the codebase does not appear to have any significant performance optimizations. Limit your response to a maximum of 200 characters.|
-| 🔐 | **Security**       | The codebase does not have explicit security measures. To enhance security, measures such as input validation, data encryption, and secure communication protocols would need to be implemented. Limit your response to a maximum of 200 characters.|
-| 🔀 | **Version Control**| The repository utilizes Git for version control. It includes a GitHub Actions workflow file that automatically triggers a build and release process for the extension when a push event occurs. Limit your response to a maximum of 200 characters.|
-| 🔌 | **Integrations**   | The system interacts with external services through HTTP requests. Limit your response to a maximum of 200 characters.|
-| 📶 | **Scalability**    | The codebase does not appear to have specific scalability measures. To enhance scalability, the system could be designed to handle increased user load and data volume, utilize caching strategies, and employ cloud-based solutions. Limit your response to a maximum of 200 characters.           |
+| ⚡️  | **Live Sessions**    |  Host one-on-one or group sessions using real-time video communication. Limit your response to a maximum of 200 characters.|
+| 🔐 | **Resources and session uploading**       |  Option for viewing of recorded session  and resource sharing. Limit your response to a maximum of 200 characters.|
+| 🔀 | **Local Leaderboards**| Display user rankings based on session completions, feedback, or participation. Limit your response to a maximum of 200 characters.|
+| 🔌 | **Chats and discussion forum**   | Create discussion boards, live chat during sessions, and Q&A threads.Limit your response to a maximum of 200 characters.|
+| 📶 | **Certification**    | Teachers can upload and update certificates, and students can download them.Limit your response to a maximum of 200 characters.           |
 
 ---
 
+## 📂 Repository Structure
+
+```sh
+    ├── .npmrc
+    ├── turbo.json
+    ├── package-lock.json
+    ├── package.json
+    ├── README.md
+    └── apps
+        ├── backend/
+        │   └── src/   
+        │       ├──package.json
+        │       ├──tsconfig.json
+        │
+        ├── frontend
+        │   ├── public/
+        │   ├── src/
+        │   ├── index.html
+        │  
+        ├── ws/
+        │   ├── src/
+        │   ├── package.json
+        │   ├── tsconfig.json
+        ├── packages/
+        └── ui/
+            ├── src/
+            └── turbo/
+
+```
+
+---
