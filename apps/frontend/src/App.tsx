@@ -21,6 +21,8 @@ import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
 <<<<<<< HEAD
 import CourseProgress from './pages/CourseProgress.tsx';
+import CloudinaryVideoGallery from './pages/AllVideos.tsx';
+import Uploader from './pages/UploadVideo.tsx';
 =======
 import Uploader from './pages/UploadVideo.tsx';
 import CloudinaryVideoGallery from './pages/AllVideos.tsx';
@@ -53,18 +55,15 @@ const App: React.FC = () => {
           <Route path="/myCourses" element={<MyCourses/>} />
           <Route path="/myCourses/:courseId" element={<CourseDetailsPage />} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
-<<<<<<< HEAD
            <Route path="/profile" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
           <Route path="/profile/:courseId" element={<CourseProgress />} />
 
-=======
           <Route path="/profile-student" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
           <Route path="/uploads" element={<Uploader/>} />
           <Route path="/getvideos" element={<CloudinaryVideoGallery/>} />
           <Route path="/lobby" element={<Lobby/>} />
->>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
         </Routes>
       </div>
       {!shouldHideNavbar && <Footer />}
