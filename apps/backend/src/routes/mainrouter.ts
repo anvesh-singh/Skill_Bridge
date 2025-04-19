@@ -19,7 +19,7 @@ const mainrouter = express.Router();
 const SECRET = process.env.JWT_SECRET;
 const defaultOptions = {
   httpOnly: false,
-  sameSite: 'Lax',
+  sameSite: 'lax',
 };
 
 // Connect to DB before handling routes
@@ -159,7 +159,7 @@ mainrouter.get('/getcourse/:courseId', async (req, res) => {
 });
 
 
-//mainrouter.use('/', checkRole());
+mainrouter.use('/', checkRole());
 
 
 export default mainrouter;
