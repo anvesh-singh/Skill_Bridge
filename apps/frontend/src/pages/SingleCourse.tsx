@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+<<<<<<< HEAD
 import { FaChalkboardTeacher, FaBookOpen } from 'react-icons/fa';
+=======
+import { FaChalkboardTeacher, FaBookOpen, FaCertificate, FaPrint } from 'react-icons/fa';
+import axios from 'axios';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+>>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -8,6 +14,7 @@ const CourseDetails = () => {
   const [joined, setJoined] = useState(false);
 
   useEffect(() => {
+<<<<<<< HEAD
     // Simulate API fetch
     setTimeout(() => {
       setCourse({
@@ -23,6 +30,22 @@ const CourseDetails = () => {
     // Check if already joined
     const joinedCourses = JSON.parse(localStorage.getItem('joinedCourses') || '[]');
     setJoined(joinedCourses.includes(courseId));
+=======
+    const fetchCourse = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/getcourse/${courseId}`, {
+          withCredentials: true,
+        });
+
+        setCourse(res.data.course);
+      } catch (err) {
+        console.error('Error fetching course:', err);
+      }
+    };
+    console.log("hi", courseId);
+    if(courseId)fetchCourse();
+
+>>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
   }, [courseId]);
 
   const handleJoin = () => {
@@ -50,7 +73,7 @@ const CourseDetails = () => {
       <h1 className="text-3xl font-bold text-gray-800 mb-4">{course.title}</h1>
       <div className="flex items-center gap-6 text-gray-600 mb-4">
         <p className="flex items-center gap-2"><FaBookOpen /> {course.type}</p>
-        <p className="flex items-center gap-2"><FaChalkboardTeacher /> {course.teacher}</p>
+        <p className="flex items-center gap-2"><FaChalkboardTeacher /> {course.instructorName}</p>
       </div>
 
       <p className="text-lg text-gray-700 mb-6">{course.description}</p>

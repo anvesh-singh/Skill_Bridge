@@ -19,7 +19,12 @@ import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
+<<<<<<< HEAD
 import CourseProgress from './pages/CourseProgress.tsx';
+=======
+import Uploader from './pages/UploadVideo.tsx';
+import CloudinaryVideoGallery from './pages/AllVideos.tsx';
+>>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -43,18 +48,25 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/course/:courseid" element={<CourseDetails />} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
           <Route path="/addCourse" element={<AddCourse />} />
           <Route path="/myCourses" element={<MyCourses/>} />
           <Route path="/myCourses/:courseId" element={<CourseDetailsPage />} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
+<<<<<<< HEAD
            <Route path="/profile" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
           <Route path="/profile/:courseId" element={<CourseProgress />} />
 
+=======
+          <Route path="/profile-student" element={<StudentProfile/>} />
+          <Route path="/teacherhome" element={<TeacherHome/>} />
+          <Route path="/uploads" element={<Uploader/>} />
+          <Route path="/getvideos" element={<CloudinaryVideoGallery/>} />
+          <Route path="/lobby" element={<Lobby/>} />
+>>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
         </Routes>
       </div>
-
       {!shouldHideNavbar && <Footer />}
     </>
   );
