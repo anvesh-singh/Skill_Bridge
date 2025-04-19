@@ -14,7 +14,8 @@ import CourseDetails from './pages/SingleCourse';
 import TeacherHome from './pages/TeacherHome';
 import MyCourses from './pages/MyCourses.tsx';
 import AddCourse from './pages/AddCourse.tsx';
-
+import CourseDetailsPage from './pages/CourseDetailsPage';
+import StudentProfile from './pages/StudentProfile'
 import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
@@ -48,13 +49,10 @@ const App: React.FC = () => {
           <Route path="/course/:courseid" element={<CourseDetails />} />
           <Route path="/addCourse" element={<AddCourse />} />
           <Route path="/myCourses" element={<MyCourses/>} />
+          <Route path="/myCourses/:courseId" element={<CourseDetailsPage />} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
-
-
-          <Route path="/lobby" element={<Lobby/>} />
+           <Route path="/profile-student" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
-          <Route path="/upload" element={<Uploader/>} />
-          <Route path="/allvideos" element={<CloudinaryVideoGallery/>} />
         </Routes>
       </div>
 
