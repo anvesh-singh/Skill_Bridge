@@ -134,16 +134,6 @@ app.use(cors({
 //   next();
 // });
 
-=======
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
-app.use(cors({
-  credentials: true,
-  origin: "http://localhost:5000",
-}));
->>>>>>> 56d0d503ccae353aa176dfb0148ea99fcf711a75
 
 app.use(bodyparser.json());
 app.use("/", mainrouter);
