@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-<<<<<<< HEAD
-import { FaChalkboardTeacher, FaBookOpen } from 'react-icons/fa';
-=======
 import { FaChalkboardTeacher, FaBookOpen, FaCertificate, FaPrint } from 'react-icons/fa';
 import axios from 'axios';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
->>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -14,23 +10,6 @@ const CourseDetails = () => {
   const [joined, setJoined] = useState(false);
 
   useEffect(() => {
-<<<<<<< HEAD
-    // Simulate API fetch
-    setTimeout(() => {
-      setCourse({
-        id: courseId,
-        title: 'Advanced Web Development',
-        image: 'https://source.unsplash.com/800x400/?coding,technology',
-        teacher: 'John Doe',
-        type: 'Coding',
-        description: 'Master advanced concepts in front-end and back-end web development.',
-      });
-    }, 1000);
-
-    // Check if already joined
-    const joinedCourses = JSON.parse(localStorage.getItem('joinedCourses') || '[]');
-    setJoined(joinedCourses.includes(courseId));
-=======
     const fetchCourse = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/getcourse/${courseId}`, {
@@ -45,7 +24,6 @@ const CourseDetails = () => {
     console.log("hi", courseId);
     if(courseId)fetchCourse();
 
->>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
   }, [courseId]);
 
   const handleJoin = () => {

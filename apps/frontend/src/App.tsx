@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import TeacherNavbar from './components/TeacherNavbar';
 import Footer from './components/Footer';
-
+import ProtectedRoute from './components/ProtectedRoute.tsx'
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import About from './pages/About';
@@ -19,12 +19,8 @@ import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
-<<<<<<< HEAD
-import CourseProgress from './pages/CourseProgress.tsx';
-=======
 import Uploader from './pages/UploadVideo.tsx';
 import CloudinaryVideoGallery from './pages/AllVideos.tsx';
->>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -44,27 +40,22 @@ const App: React.FC = () => {
       <div className={shouldHideNavbar ? '' : 'pt-16'}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/courses" element={<ProtectedRoute>
+        <Courses />
+      </ProtectedRoute>} />
+          <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+          <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
-          <Route path="/course/:courseId" element={<CourseDetails />} />
-          <Route path="/addCourse" element={<AddCourse />} />
-          <Route path="/myCourses" element={<MyCourses/>} />
-          <Route path="/myCourses/:courseId" element={<CourseDetailsPage />} />
-          <Route path="/profile-teacher" element={<ProfileTeacher/>} />
-<<<<<<< HEAD
-           <Route path="/profile" element={<StudentProfile/>} />
-          <Route path="/teacherhome" element={<TeacherHome/>} />
-          <Route path="/profile/:courseId" element={<CourseProgress />} />
-
-=======
-          <Route path="/profile-student" element={<StudentProfile/>} />
-          <Route path="/teacherhome" element={<TeacherHome/>} />
-          <Route path="/uploads" element={<Uploader/>} />
-          <Route path="/getvideos" element={<CloudinaryVideoGallery/>} />
-          <Route path="/lobby" element={<Lobby/>} />
->>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
+          <Route path="/course/:courseId" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
+          <Route path="/addCourse" element={<ProtectedRoute><AddCourse /></ProtectedRoute>} />
+          <Route path="/myCourses" element={<ProtectedRoute><MyCourses/></ProtectedRoute>} />
+          <Route path="/myCourses/:courseId" element={<ProtectedRoute><CourseDetailsPage /></ProtectedRoute>} />
+          <Route path="/profile-teacher" element={<ProtectedRoute><ProfileTeacher/></ProtectedRoute>} />
+          <Route path="/profile-student" element={<ProtectedRoute><StudentProfile/></ProtectedRoute>} />
+          <Route path="/teacherhome" element={<ProtectedRoute><TeacherHome/></ProtectedRoute>} />
+          <Route path="/uploads" element={<ProtectedRoute><Uploader/></ProtectedRoute>} />
+          <Route path="/getvideos" element={<ProtectedRoute><CloudinaryVideoGallery/></ProtectedRoute>} />
+          <Route path="/lobby" element={<ProtectedRoute><Lobby/></ProtectedRoute>} />
         </Routes>
       </div>
       {!shouldHideNavbar && <Footer />}

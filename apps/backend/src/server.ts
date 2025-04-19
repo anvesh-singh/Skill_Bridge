@@ -70,8 +70,8 @@ app.post('/api/recommend', async (req: Request, res: Response) => {
 });
 //*************************** ML SERVER***************************************
 app.use(cors({
-  credentials: true,
   origin: "http://localhost:5173",
+  credentials: true,
 }));
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.url}`);

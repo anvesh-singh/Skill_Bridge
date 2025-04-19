@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { TeacherModel } from '../database/teacherschema';
 import { StudentModel } from '../database/studentschema';
-import { courseModel } from '../database/courseschema'; // Import your course model
+import { CourseModel } from '../database/courseschema'; // Import your course model
 import connectDB from '../database/db'; // Import the connectDB function to connect to MongoDB
 import { runSeeds } from '../database/seed';
 import { checkRole } from '../middlewares/rolemiddleware';
@@ -18,7 +18,7 @@ dotenv.config();
 const mainrouter = express.Router();
 const SECRET = process.env.JWT_SECRET;
 const defaultOptions = {
-  httpOnly: true,
+  httpOnly: false,
   sameSite: 'Lax',
 };
 
@@ -123,7 +123,7 @@ mainrouter.post('/signup', async (req, res) => {
 mainrouter.get('/getcourses', async (req, res) => {
   try {
     // Fetch all courses from the database
-    const courses = await courseModel.find();
+    const courses = await CourseModel.find();
 
     if (!courses || courses.length === 0) {
       return res.status(404).json({ msg: 'No courses found' });
@@ -145,7 +145,7 @@ mainrouter.get('/getcourse/:courseId', async (req, res) => {
 
   try {
     // Fetch the course from the database
-    const course = await courseModel.findById(courseId);
+    const course = await CourseModel.findById(courseId);
 
     if (!course) {
       return res.status(404).json({ msg: 'Course not found' });
