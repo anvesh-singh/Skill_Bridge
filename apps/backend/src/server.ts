@@ -148,16 +148,7 @@ app.use(cors({
 //   next();
 // });
 
-=======
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
-app.use(cors({
-  credentials: true,
-  origin: "http://localhost:5000",
-}));
->>>>>>> 7dc9110802d0821b594581687ea3a274a90bc9ca
+
 
 // Start the server
 app.listen(PORT, (err) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import {  Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import TeacherNavbar from './components/TeacherNavbar';
 import Footer from './components/Footer';
@@ -22,6 +22,7 @@ import { Lobby } from './pages/VCLobby.tsx';
 import CourseProgress from './pages/CourseProgress.tsx';
 import CloudinaryVideoGallery from './pages/AllVideos.tsx';
 import Uploader from './pages/UploadVideo.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 
 const App: React.FC = () => {
   const location = useLocation();
