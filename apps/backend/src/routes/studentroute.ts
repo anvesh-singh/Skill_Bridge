@@ -39,30 +39,30 @@ studentrouter.get('/getuser', async (req, res) => {
 
 
 
-studentRouter.get('/isenrolled/:courseId', async (req, res) => {
-    const token = req.cookies.jwt;
-    const { courseId } = req.params;
-  
-    if (!token) return res.status(401).json({ msg: 'No token provided' });
-  
-    try {
-      const decoded = jwt.verify(token, SECRET) as { id: string };
-      const userId = decoded.id;
-  
-      const student = await StudentModel.findById(userId);
-  
-      if (!student) return res.status(404).json({ msg: 'Student not found' });
-  
-      const isEnrolled = student.enrolledCourses.includes(courseId);
-  
-      return res.status(200).json({ enrolled: isEnrolled });
-    } catch (error: any) {
-      console.error('Error checking enrollment:', error);
-      if (error.name === 'JsonWebTokenError')
-        return res.status(401).json({ msg: 'Invalid token' });
-      return res.status(500).json({ msg: 'Internal server error' });
-    }
-  });
+studentrouter.get("/isenrolled/:courseId", async (req, res) => {
+  const token = req.cookies.jwt;
+  const { courseId } = req.params;
+
+  if (!token) return res.status(401).json({ msg: "No token provided" });
+
+  try {
+    const decoded = jwt.verify(token, SECRET) as { id: string };
+    const userId = decoded.id;
+
+    const student = await StudentModel.findById(userId);
+
+    if (!student) return res.status(404).json({ msg: "Student not found" });
+
+    const isEnrolled = student.enrolledCourses.includes(courseId);
+
+    return res.status(200).json({ enrolled: isEnrolled });
+  } catch (error: any) {
+    console.error("Error checking enrollment:", error);
+    if (error.name === "JsonWebTokenError")
+      return res.status(401).json({ msg: "Invalid token" });
+    return res.status(500).json({ msg: "Internal server error" });
+  }
+});
 
 
 
