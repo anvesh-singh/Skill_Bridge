@@ -41,7 +41,7 @@ studentrouter.get('/getuser', async (req, res) => {
 
 
 
-studentRouter.get('/isenrolled/:courseId', async (req, res) => {
+studentrouter.get('/isenrolled/:courseId', async (req, res) => {
     const token = req.cookies.jwt;
     const { courseId } = req.params;
   

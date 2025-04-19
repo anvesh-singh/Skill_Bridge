@@ -8,7 +8,7 @@ import { decodeToken } from "react-jwt";
 import  Cookies  from 'js-cookie';
 
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;  
 
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login');
