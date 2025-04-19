@@ -19,8 +19,9 @@ import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
-import Uploader from './pages/UploadVideo.tsx';
+import CourseProgress from './pages/CourseProgress.tsx';
 import CloudinaryVideoGallery from './pages/AllVideos.tsx';
+import Uploader from './pages/UploadVideo.tsx';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -56,6 +57,20 @@ const App: React.FC = () => {
           <Route path="/uploads" element={<ProtectedRoute><Uploader/></ProtectedRoute>} />
           <Route path="/getvideos" element={<ProtectedRoute><CloudinaryVideoGallery/></ProtectedRoute>} />
           <Route path="/lobby" element={<ProtectedRoute><Lobby/></ProtectedRoute>} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
+          <Route path="/addCourse" element={<AddCourse />} />
+          <Route path="/myCourses" element={<MyCourses/>} />
+          <Route path="/myCourses/:courseId" element={<CourseDetailsPage />} />
+          <Route path="/profile-teacher" element={<ProfileTeacher/>} />
+           <Route path="/profile" element={<StudentProfile/>} />
+          <Route path="/teacherhome" element={<TeacherHome/>} />
+          <Route path="/profile/:courseId" element={<CourseProgress />} />
+
+          <Route path="/profile-student" element={<StudentProfile/>} />
+          <Route path="/teacherhome" element={<TeacherHome/>} />
+          <Route path="/uploads" element={<Uploader/>} />
+          <Route path="/getvideos" element={<CloudinaryVideoGallery/>} />
+          <Route path="/lobby" element={<Lobby/>} />
         </Routes>
       </div>
       {!shouldHideNavbar && <Footer />}
