@@ -1,26 +1,46 @@
-//@ts-nocheck
+// @ts-nocheck
 import express, { Request, Response } from "express";
 import cors from "cors";
-import bodyparser from "body-parser";
+import bodyParser from "body-parser";
 import mainrouter from "./routes/mainrouter";
-import dotenv from 'dotenv';
-import { spawn } from 'child_process';
+import dotenv from "dotenv";
+import fs from "fs";
+import path from "path";
+import { spawn } from "child_process";
 
 dotenv.config();
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
-// Enable CORS for your frontend origin
-app.use(
-  cors({
-    credentials: true,
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
-  })
-);
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5000"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
+
+
 
 // Parse JSON bodies
 app.use(express.json());
+app.use(bodyParser.json());
+
+// Mount other routers
+app.use("/", mainrouter);
 
 // Define payload types
 interface PredictPayload {
@@ -40,11 +60,20 @@ type ModelPayload = PredictPayload | RecommendPayload;
  * Calls the Python inference script and returns its JSON output.
  */
 function callModel(payload: ModelPayload): Promise<any> {
-  // Choose the Python launcher based on the platform
-  const pythonCmd = process.platform === "win32" ? "py" : "python3";
-  // Directory where model.py and its data files live
   const backendDir = path.resolve(__dirname, "../../Ai/backend");
-  // Absolute path to the Python script
+
+  // Try to use venv Python if available
+  const venvPyWin = path.join(backendDir, ".venv", "Scripts", "python.exe");
+  const venvPyNix = path.join(backendDir, ".venv", "bin", "python");
+  let pythonCmd: string;
+  if (process.platform === "win32" && fs.existsSync(venvPyWin)) {
+    pythonCmd = venvPyWin;
+  } else if (process.platform !== "win32" && fs.existsSync(venvPyNix)) {
+    pythonCmd = venvPyNix;
+  } else {
+    pythonCmd = process.platform === "win32" ? "py" : "python3";
+  }
+
   const scriptPath = path.join(backendDir, "model.py");
 
   return new Promise((resolve, reject) => {
@@ -78,7 +107,6 @@ function callModel(payload: ModelPayload): Promise<any> {
       }
     });
 
-    // Write the JSON payload to Python's stdin
     py.stdin.write(JSON.stringify(payload));
     py.stdin.end();
   });
@@ -110,23 +138,6 @@ app.post("/api/recommend", async (req: Request, res: Response) => {
 //*************************** ML SERVER***************************************
 
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5000"
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
 
 
 // app.use((req, res, next) => {
@@ -147,4 +158,15 @@ app.use("/", mainrouter);
 app.listen(process.env.PORT, (err) => {
   if (err) console.log("error ocurred");
   console.log(`app is listening on port ${process.env.PORT}`);
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.url}`);
+  next();
+});
+
+
+
+// Start the server
+app.listen(PORT, (err) => {
+  if (err) console.log("Server error:", err);
+  console.log(`App is listening on port ${PORT}`);
 });
