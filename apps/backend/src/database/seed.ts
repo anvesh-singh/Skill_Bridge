@@ -94,7 +94,7 @@ const seedTeachers = async () => {
       passwordHash: "hashedpassword123", // Example hash for simplicity
       avatarUrl: "https://example.com/avatar.jpg",
       bio: `Bio for Teacher ${i + 1}`,
-      roles: ["teacher"],
+      role: "teacher",
       skills: [getRandomElement(["carpentry", "coding", "tailoring", "plumbing", "gardening"]), getRandomElement(["woodwork", "frontend dev", "bike repair", "marketing", "social media"])],
       interests: [getRandomElement(["woodwork", "frontend dev", "bike repair", "marketing", "social media"])],
       coursesCreated: []  // Will be populated with course IDs after courses are created
@@ -119,7 +119,7 @@ const seedStudents = async (courses) => {
       passwordHash: "hashedpassword123", // Example hash for simplicity
       avatarUrl: "https://example.com/avatar.jpg",
       bio: `Bio for Student ${i + 1}`,
-      roles: ["student"],
+      role: "student",
       skills: [getRandomElement(["carpentry", "coding", "tailoring", "plumbing", "gardening"]), getRandomElement(["woodwork", "frontend dev", "bike repair", "marketing", "social media"])],
       interests: [getRandomElement(["woodwork", "frontend dev", "bike repair", "marketing", "social media"])],
       enrolledCourses: []  // Will be populated with course IDs after courses are created
