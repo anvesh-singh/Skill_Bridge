@@ -12,7 +12,9 @@ studentrouter.get('/getuser', async (req, res) => {
     const token = req.cookies.jwt; // Retrieve token from cookies
 
     if (!token) {
-        return res.status(401).json({ msg: 'No token provided' });
+        return res.status(401).json({ msg: 'No token provided',
+            type : "getuser"
+        });
     }
 
     try {
@@ -39,11 +41,13 @@ studentrouter.get('/getuser', async (req, res) => {
 
 
 
-studentRouter.get('/isenrolled/:courseId', async (req, res) => {
+studentrouter.get('/isenrolled/:courseId', async (req, res) => {
     const token = req.cookies.jwt;
     const { courseId } = req.params;
   
-    if (!token) return res.status(401).json({ msg: 'No token provided' });
+    if (!token) return res.status(401).json({ msg: 'No token provided',
+        type : "isenrolled"
+    });
   
     try {
       const decoded = jwt.verify(token, SECRET) as { id: string };

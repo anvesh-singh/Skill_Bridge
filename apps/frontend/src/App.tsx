@@ -20,6 +20,8 @@ import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
+import Uploader from './pages/UploadVideo.tsx';
+import CloudinaryVideoGallery from './pages/AllVideos.tsx';
 
 const App: React.FC = () => {
   const location = useLocation();
