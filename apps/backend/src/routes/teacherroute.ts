@@ -41,66 +41,66 @@ teacherrouter.get('/getuser', async (req, res) => {
 });
 
 
-teacherrouter.post('/addcourse', async (req, res) => {
-    const token = req.cookies.jwt;
-    if (!token) {
-      return res.status(401).json({ msg: 'No token provided' });
+teacherrouter.post("/addcourse", async (req, res) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.status(401).json({ msg: "No token provided" });
+  }
+
+  try {
+    // 1. Verify token
+    const decoded = jwt.verify(token, SECRET) as { id: string };
+    const teacherId = decoded.id;
+
+    // 2. Fetch teacher
+    const teacher = await TeacherModel.findById(teacherId);
+    if (!teacher) {
+      return res.status(404).json({ msg: "Teacher not found" });
     }
-  
-    try {
-      // 1. Verify token
-      const decoded = jwt.verify(token, SECRET) as { id: string };
-      const teacherId = decoded.id;
-  
-      // 2. Fetch teacher
-      const teacher = await TeacherModel.findById(teacherId);
-      if (!teacher) {
-        return res.status(404).json({ msg: 'Teacher not found' });
-      }
-  
-      // 3. Extract course details from body
-      const {
-        title,
-        description,
-        tags,
-        prerequisites,
-        schedule,
-        difficulty,
-        price,
-        isLive,
-        resources
-      } = req.body;
-  
-      // 4. Create and save the new course
-      const course = new CourseModel({
-        title,
-        description,
-        tags,
-        prerequisites,
-        schedule,
-        difficulty,
-        price,
-        isLive,
-        resources,
-        instructor: teacherId
-      });
-  
-      const savedCourse = await course.save();
-  
-      // 5. Add to teacher’s courses list
-      teacher.courses = teacher.courses || [];
-      teacher.courses.push(savedCourse._id);
-      await teacher.save();
-  
-      return res.status(201).json({ msg: 'Course created', course: savedCourse });
-    } catch (error: any) {
-      console.error('Error creating course:', error);
-      if (error.name === 'JsonWebTokenError') {
-        return res.status(401).json({ msg: 'Invalid token' });
-      }
-      return res.status(500).json({ msg: 'Internal server error' });
+
+    // 3. Extract course details from body
+    const {
+      title,
+      description,
+      tags,
+      prerequisites,
+      schedule,
+      difficulty,
+      price,
+      isLive,
+      resources,
+    } = req.body;
+
+    // 4. Create and save the new course
+    const course = new CourseModel({
+      title,
+      description,
+      tags,
+      prerequisites,
+      schedule,
+      difficulty,
+      price,
+      isLive,
+      resources,
+      instructor: teacherId,
+    });
+
+    const savedCourse = await course.save();
+
+    // 5. Add to teacher’s courses list
+    teacher.courses = teacher.courses || [];
+    teacher.courses.push(savedCourse._id);
+    await teacher.save();
+
+    return res.status(201).json({ msg: "Course created", course: savedCourse });
+  } catch (error: any) {
+    console.error("Error creating course:", error);
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({ msg: "Invalid token" });
     }
-  });
+    return res.status(500).json({ msg: "Internal server error" });
+  }
+});
   
 
 

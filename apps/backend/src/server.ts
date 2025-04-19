@@ -1,74 +1,114 @@
 //@ts-nocheck
-
-import express, { Request, Response }  from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import bodyparser from "body-parser";
 import mainrouter from "./routes/mainrouter";
-import videoRouter from "./routes/videoUploadRouter";
-import path from "path";
 import dotenv from 'dotenv';
 import { spawn } from 'child_process';
 
 dotenv.config();
 
 const app = express();
+const PORT = Number(process.env.PORT) || 3000;
 
-//****************************MLSERVER**********************************************
+// Enable CORS for your frontend origin
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  })
+);
+
+// Parse JSON bodies
 app.use(express.json());
 
+// Define payload types
 interface PredictPayload {
-  command: 'predict';
+  command: "predict";
   title: string;
   top_k: number;
 }
 interface RecommendPayload {
-  command: 'recommend';
-  session_index: string;
+  command: "recommend";
+  session_index: number;
   n: number;
 }
 
 type ModelPayload = PredictPayload | RecommendPayload;
 
+/**
+ * Calls the Python inference script and returns its JSON output.
+ */
 function callModel(payload: ModelPayload): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const py = spawn('python3', ['model.py']);
+  // Choose the Python launcher based on the platform
+  const pythonCmd = process.platform === "win32" ? "py" : "python3";
+  // Directory where model.py and its data files live
+  const backendDir = path.resolve(__dirname, "../../Ai/backend");
+  // Absolute path to the Python script
+  const scriptPath = path.join(backendDir, "model.py");
 
-    let data = '';
-    py.stdout.on('data', (chunk) => (data += chunk.toString()));
-    py.stderr.on('data', (err) => console.error(err.toString()));
-    py.on('close', () => {
+  return new Promise((resolve, reject) => {
+    const py = spawn(pythonCmd, [scriptPath], { cwd: backendDir });
+
+    let data = "";
+    let errorOutput = "";
+
+    py.stdout.on("data", (chunk) => (data += chunk.toString()));
+    py.stderr.on("data", (chunk) => (errorOutput += chunk.toString()));
+
+    py.on("error", (err) => {
+      console.error("Failed to start Python process:", err);
+      reject(err);
+    });
+
+    py.on("close", (code) => {
+      if (code !== 0) {
+        console.error(
+          `Python exited with code ${code} and errors:\n${errorOutput}`
+        );
+        return reject(
+          new Error(`Python exited with code ${code}. ${errorOutput}`)
+        );
+      }
       try {
         resolve(JSON.parse(data));
-      } catch (e) {
-        reject(e);
+      } catch (e: any) {
+        console.error("Invalid JSON from Python:", data);
+        reject(new Error(`Invalid JSON from Python: ${e.message}`));
       }
     });
 
+    // Write the JSON payload to Python's stdin
     py.stdin.write(JSON.stringify(payload));
     py.stdin.end();
   });
 }
 
-app.post('/api/predict', async (req: Request, res: Response) => {
+// Prediction endpoint
+app.post("/api/predict", async (req: Request, res: Response) => {
   const { title, top_k } = req.body as { title: string; top_k: number };
   try {
-    const result = await callModel({ command: 'predict', title, top_k });
+    const result = await callModel({ command: "predict", title, top_k });
     res.json(result);
   } catch (e: any) {
+    console.error("Predict error:", e.message);
     res.status(500).json({ error: e.message });
   }
 });
 
-app.post('/api/recommend', async (req: Request, res: Response) => {
-  const { session_index, n } = req.body as { session_index: string; n: number };
+// Recommendation endpoint
+app.post("/api/recommend", async (req: Request, res: Response) => {
+  const { session_index, n } = req.body as { session_index: number; n: number };
   try {
-    const result = await callModel({ command: 'recommend', session_index, n });
+    const result = await callModel({ command: "recommend", session_index, n });
     res.json(result);
   } catch (e: any) {
+    console.error("Recommend error:", e.message);
     res.status(500).json({ error: e.message });
   }
 });
 //*************************** ML SERVER***************************************
+<<<<<<< HEAD
 
 
 const allowedOrigins = [
@@ -95,17 +135,20 @@ app.use(cors({
 //   next();
 // });
 
+=======
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:5173",
+}));
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:5000",
+}));
+>>>>>>> 56d0d503ccae353aa176dfb0148ea99fcf711a75
 
 app.use(bodyparser.json());
 app.use("/", mainrouter);
-
-
-app.use('/videos', express.static(path.join(__dirname,'uploads'))); 
-// serve videos
-app.use('/api/videos', videoRouter); // mount video routes
-
 app.listen(process.env.PORT, (err) => {
   if (err) console.log("error ocurred");
   console.log(`app is listening on port ${process.env.PORT}`);
 });
-
