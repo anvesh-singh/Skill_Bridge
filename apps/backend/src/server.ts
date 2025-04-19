@@ -13,13 +13,27 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
-// Enable CORS for your frontend origin
-app.use(
-  cors({
-    credentials: true,
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
-  })
-);
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5000"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
+
+
 
 // Parse JSON bodies
 app.use(express.json());
@@ -124,29 +138,12 @@ app.post("/api/recommend", async (req: Request, res: Response) => {
 //*************************** ML SERVER***************************************
 
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5000"
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
 
 
-// app.use((req, res, next) => {
-//   console.log(`[${req.method}] ${req.url}`);
-//   next();
-// });
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.url}`);
+  next();
+});
 
 
 

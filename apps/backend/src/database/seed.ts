@@ -52,19 +52,25 @@ const seedCourses = async (teachers) => {
   ];
 
   const tags = ["coding", "carpentry", "tailoring", "repair", "gardening", "marketing", "data science", "cooking", "plumbing", "design"];
+  const types = ["Workshop", "Recorded", "Live", "Project-Based", "Bootcamp"];
 
   for (let i = 0; i < 10; i++) {
+    const selectedTeacher = teachers[i % teachers.length];
+
     const course = {
       title: courseTitles[i],
       description: courseDescriptions[i],
       tags: [getRandomElement(tags), getRandomElement(tags), getRandomElement(tags)],
-      instructor: teachers[i % teachers.length]._id, // Assign each course to a teacher
+      instructor: selectedTeacher._id, // ref to Teacher
+      instructorName: selectedTeacher.name, // required instructorName
+      type: getRandomElement(types), // one of allowed course types
+      students: [], // initially empty array
       resources: [getRandomElement(["https://example.com", "https://youtube.com", "https://coursera.com"])],
       prerequisites: [getRandomElement(["Basic knowledge", "Intermediate skills", "Advanced experience"])],
       schedule: getRandomDate(),
       difficulty: getRandomElement(["Beginner", "Intermediate", "Advanced"]),
-      price: Math.random() > 0.5 ? 0 : Math.floor(Math.random() * 100 + 10), // Price range from 10 to 100, or free
-      isLive: Math.random() > 0.5, // Randomly determine if course is live
+      price: Math.random() > 0.5 ? 0 : Math.floor(Math.random() * 100 + 10),
+      isLive: Math.random() > 0.5
     };
 
     sampleCourses.push(course);
@@ -74,6 +80,7 @@ const seedCourses = async (teachers) => {
   console.log("✅ Course seed data inserted!");
   return sampleCourses;
 };
+
 
 const seedTeachers = async () => {
   await TeacherModel.deleteMany(); // Delete existing teachers
