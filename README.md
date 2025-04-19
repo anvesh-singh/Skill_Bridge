@@ -66,7 +66,15 @@
         │   └── src/   
         │       ├──package.json
         │       ├──tsconfig.json
-        │
+        ├── Ai
+        │   ├──backend/
+        │   │   ├── model.py
+        │   │   ├── .venv
+        │   │   ├──requirements.txt
+        │   │   ├──train.py
+        │   │   ├──data.csv
+        │   ├──frontend/
+        │       ├── app.js
         ├── frontend
         │   ├── public/
         │   ├── src/
@@ -84,3 +92,39 @@
 ```
 
 ---
+
+### 🔧 Installation
+
+1. Clone the assistant-chat-gpt repository:
+```sh
+git clone https://github.com/anvesh-singh/36-ka-akda.git
+```
+
+2. Change to the project directory:
+```sh
+cd SkillBridge
+```
+
+3. Install the dependencies:
+```sh
+npm install
+```
+
+### 🤖 Running SkillBridge
+
+```sh
+npm run dev
+```
+
+
+
+## 🔰 Contributers
+[**Anvesh Singh**](https://github.com/anvesh-singh)
+
+[**Iqra Abbasi**](https://github.com/abbasiiqra)
+
+[**Shantanu Gaur**](https://github.com/ShantanuGaur26)
+
+[**Bishal Kedia**](https://github.com/BishalKedia)
+
+

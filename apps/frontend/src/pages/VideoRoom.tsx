@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
+import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
 
 interface VideoRoomProps {
   roomId: string;
@@ -134,20 +135,49 @@ const VideoRoom: React.FC<VideoRoomProps> = ({ roomId }) => {
     }
   };
 
-  return (
-    <div className="video-room">
-      <div className="controls">
-        <button onClick={toggleMute}>{muted ? 'Unmute' : 'Mute'}</button>
-        <button onClick={toggleVideo}>{videoOff ? 'Turn Camera On' : 'Turn Camera Off'}</button>
-      </div>
-      <div className="videos">
-        <video ref={localVideoRef} autoPlay muted playsInline className="video-element" />
-        {Object.entries(peers).map(([id, stream]) => (
-          <VideoPlayer key={id} stream={stream} />
-        ))}
-      </div>
+
+return (
+  <div className="relative flex flex-col h-screen bg-black text-white">
+    {/* Participant Grid */}
+    <div className="flex-grow p-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[minmax(150px,_1fr)] overflow-y-auto">
+      {Object.entries(peers).map(([id, stream]) => (
+        <VideoPlayer key={id} stream={stream} />
+      ))}
     </div>
+
+    {/* Self Video - Floating in corner */}
+    <video
+      ref={localVideoRef}
+      autoPlay
+      muted
+      playsInline
+      className="fixed bottom-28 right-6 w-40 h-28 object-cover rounded-lg shadow-md border border-white/10 z-10"
+    />
+
+    {/* Controls */}
+    <div className="fixed bottom-0 left-0 right-0 flex justify-center items-center gap-6 bg-black/60 py-4 backdrop-blur-md shadow-md z-20">
+      <button
+        onClick={toggleMute}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full text-white transition ${
+          muted ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-700 hover:bg-gray-600'
+        }`}
+      >
+        {muted ? <MicOff size={20} /> : <Mic size={20} />}
+        {muted ? 'Unmute' : 'Mute'}
+      </button>
+      <button
+        onClick={toggleVideo}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full text-white transition ${
+          videoOff ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-700 hover:bg-gray-600'
+        }`}
+      >
+        {videoOff ? <VideoOff size={20} /> : <Video size={20} />}
+        {videoOff ? 'Turn Camera On' : 'Turn Camera Off'}
+      </button>
+    </div>
+  </div>
 );
+
 
 };
 

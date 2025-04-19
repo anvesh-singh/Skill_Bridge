@@ -159,7 +159,7 @@ mainrouter.get('/getcourse/:courseId', async (req, res) => {
 });
 
 
-mainrouter.use('/', checkRole());
+//mainrouter.use('/', checkRole());
 
 
 export default mainrouter;

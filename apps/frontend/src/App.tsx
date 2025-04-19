@@ -14,11 +14,14 @@ import CourseDetails from './pages/SingleCourse';
 import TeacherHome from './pages/TeacherHome';
 import MyCourses from './pages/MyCourses.tsx';
 import AddCourse from './pages/AddCourse.tsx';
-
+import CourseDetailsPage from './pages/CourseDetailsPage';
+import StudentProfile from './pages/StudentProfile'
 import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
+import Uploader from './pages/UploadVideo.tsx';
+import CloudinaryVideoGallery from './pages/AllVideos.tsx';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -46,8 +49,13 @@ const App: React.FC = () => {
           <Route path="/course/:courseId" element={<CourseDetails />} />
           <Route path="/addCourse" element={<AddCourse />} />
           <Route path="/myCourses" element={<MyCourses/>} />
+          <Route path="/myCourses/:courseId" element={<CourseDetailsPage />} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
+          <Route path="/profile-student" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
+          <Route path="/uploads" element={<Uploader/>} />
+          <Route path="/getvideos" element={<CloudinaryVideoGallery/>} />
+          <Route path="/lobby" element={<Lobby/>} />
         </Routes>
       </div>
       {!shouldHideNavbar && <Footer />}
