@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaChalkboardTeacher, FaBookOpen, FaCertificate, FaPrint } from 'react-icons/fa';
+import axios from 'axios';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -9,17 +11,20 @@ const CourseDetails = () => {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
-      setCourse({
-        id: courseId,
-        title: 'Advanced Web Development',
-        image: 'https://source.unsplash.com/800x400/?coding,technology',
-        teacher: 'John Doe',
-        type: 'Coding',
-        description: 'Master advanced concepts in front-end and back-end web development.'
-      });
-    }, 1000);
+    const fetchCourse = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/getcourse/${courseId}`, {
+          withCredentials: true,
+        });
+
+        setCourse(res.data.course);
+      } catch (err) {
+        console.error('Error fetching course:', err);
+      }
+    };
+    console.log("hi", courseId);
+    if(courseId)fetchCourse();
+
   }, [courseId]);
 
   const handleJoin = () => setJoined(true);
@@ -37,7 +42,7 @@ const CourseDetails = () => {
       <h1 className="text-3xl font-bold text-gray-800 mb-4">{course.title}</h1>
       <div className="flex items-center gap-6 text-gray-600 mb-4">
         <p className="flex items-center gap-2"><FaBookOpen /> {course.type}</p>
-        <p className="flex items-center gap-2"><FaChalkboardTeacher /> {course.teacher}</p>
+        <p className="flex items-center gap-2"><FaChalkboardTeacher /> {course.instructorName}</p>
       </div>
 
       <p className="text-lg text-gray-700 mb-6">{course.description}</p>

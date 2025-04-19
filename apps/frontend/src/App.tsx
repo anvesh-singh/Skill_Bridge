@@ -43,20 +43,13 @@ const App: React.FC = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/course/:courseid" element={<CourseDetails />} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
           <Route path="/addCourse" element={<AddCourse />} />
           <Route path="/myCourses" element={<MyCourses/>} />
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
-<<<<<<< HEAD
-
-
-          <Route path="/lobby" element={<Lobby/>} />
-=======
           <Route path="/teacherhome" element={<TeacherHome/>} />
->>>>>>> 8d67a106475de4e42d5ebd2e2b41a8292e8afee6
         </Routes>
       </div>
-
       {!shouldHideNavbar && <Footer />}
     </>
   );

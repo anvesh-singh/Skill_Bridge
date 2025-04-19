@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { User, LogOut } from 'lucide-react';
 import { Menu, X, } from 'lucide-react'
 import toast from 'react-hot-toast';
-
+import  Cookies from 'js-cookie';
 // const TeacherNavbar = ({ isLoggedIn, setIsLoggedIn }: { isLoggedIn: boolean, setIsLoggedIn: (value: boolean) => void }) => {
 //   const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ const navigate = useNavigate();
 
 const handleLogout = () => {
   setIsLoggedIn(false);
-  localStorage.removeItem('token'); // if you're storing a token
+  Cookies.remove('token'); // if you're storing a token
   toast.success("Logged out successfully!");
   navigate('/login');
 };
