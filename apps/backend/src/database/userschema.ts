@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema(
         joinedAt: Date,
       },
     ],
-    roles: { type: [String], default: ['learner'] }, // e.g., ['admin', 'instructor', 'learner']
+    roles: { type: [String], default: ['student'] }, // e.g., ['admin', 'instructor', 'learner']
   },
   { timestamps: true }
 );

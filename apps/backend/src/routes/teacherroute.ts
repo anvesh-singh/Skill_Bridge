@@ -41,7 +41,7 @@ teacherrouter.get('/getuser', async (req, res) => {
 });
 
 
-router.post('/addcourse', async (req, res) => {
+teacherrouter.post('/addcourse', async (req, res) => {
     const token = req.cookies.jwt;
     if (!token) {
       return res.status(401).json({ msg: 'No token provided' });

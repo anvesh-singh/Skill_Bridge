@@ -69,19 +69,32 @@ app.post('/api/recommend', async (req: Request, res: Response) => {
   }
 });
 //*************************** ML SERVER***************************************
-app.use(cors({
-  credentials: true,
-  origin: "http://localhost:5173",
-}));
-app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.url}`);
-  next();
-});
 
-// app.use(cors({
-//   credentials: true,
-//   origin: "http://localhost:5000",
-// }));
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5000"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
+
+// app.use((req, res, next) => {
+//   console.log(`[${req.method}] ${req.url}`);
+//   next();
+// });
+
 
 app.use(bodyparser.json());
 app.use("/", mainrouter);
