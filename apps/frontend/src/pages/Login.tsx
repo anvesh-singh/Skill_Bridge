@@ -1,62 +1,79 @@
-import React, { useActionState, useEffect, useState } from 'react';
+//@ts-nocheck
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useAuth } from '../context/Context.tsx';  // Importing useAuth
+import { useAuth } from '../context/Context.tsx';
 import axios from 'axios';
+import { decodeToken } from "react-jwt";
+import  Cookies  from 'js-cookie';
 
-const BACKEND_URL=import.meta.env.VITE_BACKEND_URL;
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const [isStudent, setIsStudent] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [email,setemail]=useState("");
-  const [password,setpassword]=useState("");
+  const { setRole } = useAuth(); // Accessing setRole from context API
 
-      const signInUser = async (path:string) => {
-        console.log(BACKEND_URL);
-        try {
-          const response = await axios.post(
-            `${BACKEND_URL}/signin`,
-            {
-              email: email,
-              password: password,
-            },
-            {
-              withCredentials: true, // important for cookie-based auth
-            }
-          );
-  
-          console.log("Login successful:", response.data);
-          navigate(path);
-          toast.success('Login successful!');
-        } catch (error:any) {
-          if (error.response) {
-            console.error("Login failed:", error.response.data);
-          } else {
-            console.error("Error during sign in:", error.message);
-          }
-        }
-      };
-  
-  
-  const { setRole } = useAuth();  // Accessing setRole from context API
+  // Utility to get cookies
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    console.log("hi",document.cookie)
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    return null;
+  };
+
+  const signInUser = async () => {
+    try {
+      // Step 1: Attempt login
+      const loginResponse = await axios.post(
+        `${BACKEND_URL}/signin`,
+        { email, password },
+        { withCredentials: true }
+      );
+      console.log(loginResponse);
+
+      // Step 2: Get the token from cookies using the custom function
+      const token = Cookies.get('jwt')
+      console.log("JWT Token:", token);
+
+      if (!token) {
+        toast.error("Login failed: no token received");
+        return;
+      }
+
+      // Step 3: Decode the token to get role
+      const decoded = decodeToken(token);
+      console.log("Decoded Token:", decoded);
+
+      if (!decoded || !decoded.role) {
+        toast.error("Login failed: role missing in token");
+        return;
+      }
+
+      const role = decoded.role;
+      setRole(role); // Update the role in context
+      toast.success("Login successful");
+
+      // Step 4: Navigate based on role
+      if (role === 'teacher') {
+        navigate('/teacherhome');
+      } else {
+        navigate('/');
+      }
+
+    } catch (err: any) {
+      console.error("Login error:", err);
+      toast.error("Invalid credentials");
+    }
+  };
 
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Simulate successful login
-
-    // Set the role based on the checkbox selection
-    setRole(isStudent ? 'student' : 'teacher');
-
-    // Navigate based on user type
-    if (isStudent) { 
-      await signInUser('/'); 
-    }
-      else {
-          await signInUser('/teacherhome'); 
-    }
+    await signInUser();
   };
 
   return (
@@ -70,36 +87,31 @@ const Login = () => {
         <input type="text" className="w-full px-3 py-2 border border-gray-800 rounded" placeholder="Name" required />
       )}
 
-      <input onChange={(e)=>{
-        setemail(e.target.value);
-      }} type="email" className="w-full px-3 py-2 border border-gray-800 rounded" placeholder="Email" required />
-      <input onChange={(e)=>{
-        setpassword(e.target.value);
-      }}
-      type="password" className="w-full px-3 py-2 border border-gray-800 rounded" placeholder="Password" required />
+      <input
+        onChange={(e) => setEmail(e.target.value)}
+        type="email"
+        className="w-full px-3 py-2 border border-gray-800 rounded"
+        placeholder="Email"
+        required
+      />
+      <input
+        onChange={(e) => setPassword(e.target.value)}
+        type="password"
+        className="w-full px-3 py-2 border border-gray-800 rounded"
+        placeholder="Password"
+        required
+      />
 
-      {/* Checkbox for user role */}
-      <div className="w-full flex items-center gap-2 text-sm">
-        <input
-          type="checkbox"
-          checked={isStudent}
-          onChange={() => setIsStudent(!isStudent)}
-          id="role"
-          className="form-checkbox"
-        />
-        <label htmlFor="role">{isStudent ? 'Logging in as Student' : 'Logging in as Teacher'}</label>
-      </div>
-
-      <div className='w-full flex justify-between text-sm mt-[-8px]'>
-        <p className='cursor-pointer'>Forgot Your Password</p>
+      <div className="w-full flex justify-between text-sm mt-[-8px]">
+        <p className="cursor-pointer">Forgot Your Password</p>
         {currentState === 'Login' ? (
-          <p onClick={() => setCurrentState('Sign Up')} className='cursor-pointer'>Create Account</p>
+          <p onClick={() => setCurrentState('Sign Up')} className="cursor-pointer">Create Account</p>
         ) : (
-          <p onClick={() => setCurrentState('Login')} className='cursor-pointer'>Login Instead</p>
+          <p onClick={() => setCurrentState('Login')} className="cursor-pointer">Login Instead</p>
         )}
       </div>
 
-      <button type="submit" className='bg-black text-white font-light px-8 py-2 mt-4'>
+      <button type="submit" className="bg-black text-white font-light px-8 py-2 mt-4">
         {currentState === 'Login' ? 'Sign In' : 'Sign Up'}
       </button>
     </form>
