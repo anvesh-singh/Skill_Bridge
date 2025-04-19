@@ -1,54 +1,147 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+// import { FaChalkboardTeacher, FaBookOpen } from 'react-icons/fa';
 
-const mockCourseDetails = {
-  course1: {
-    title: 'React Fundamentals',
-    students: [
-      { id: 'stu1', name: 'Alice', progress: 100 },
-      { id: 'stu2', name: 'Bob', progress: 75 },
-    ],
-  },
-  course2: {
-    title: 'Intro to Python',
-    students: [
-      { id: 'stu3', name: 'Charlie', progress: 85 },
-      { id: 'stu4', name: 'David', progress: 100 },
-    ],
-  },
-};
+// const CourseDetails = () => {
+//   const { courseId } = useParams();
+//   const [course, setCourse] = useState<any>(null);
+//   const [joined, setJoined] = useState(false);
 
-const CourseDetailsPage = () => {
-  const { courseId } = useParams<{ courseId: string }>();
-  const course = mockCourseDetails[courseId];
+//   useEffect(() => {
+//     // Simulate API fetch
+//     setTimeout(() => {
+//       setCourse({
+//         id: courseId,
+//         title: 'Advanced Web Development',
+//         image: 'https://source.unsplash.com/800x400/?coding,technology',
+//         teacher: 'John Doe',
+//         type: 'Coding',
+//         description: 'Master advanced concepts in front-end and back-end web development.',
+//       });
+//     }, 1000);
 
-  const generateCertificate = (studentName: string) => {
-    alert(`Certificate generated for ${studentName}!`);
+//     // Check if already joined
+//     const joinedCourses = JSON.parse(localStorage.getItem('joinedCourses') || '[]');
+//     setJoined(joinedCourses.includes(courseId));
+//   }, [courseId]);
+
+//   const handleJoin = () => {
+//     const joinedCourses = JSON.parse(localStorage.getItem('joinedCourses') || '[]');
+//     const updated = [...new Set([...joinedCourses, courseId])];
+//     localStorage.setItem('joinedCourses', JSON.stringify(updated));
+//     setJoined(true);
+//   };
+
+//   const handleLeave = () => {
+//     const joinedCourses = JSON.parse(localStorage.getItem('joinedCourses') || '[]');
+//     const updated = joinedCourses.filter((id: string) => id !== courseId);
+//     localStorage.setItem('joinedCourses', JSON.stringify(updated));
+//     setJoined(false);
+//   };
+
+//   if (!course) return <div className="text-center mt-10">Loading course details...</div>;
+
+//   return (
+//     <div className="max-w-6xl mx-auto p-6">
+//       <div className="mb-6">
+//         <img src={course.image} alt={course.title} className="w-full rounded-lg shadow-lg" />
+//       </div>
+
+//       <h1 className="text-3xl font-bold text-gray-800 mb-4">{course.title}</h1>
+//       <div className="flex items-center gap-6 text-gray-600 mb-4">
+//         <p className="flex items-center gap-2"><FaBookOpen /> {course.type}</p>
+//         <p className="flex items-center gap-2"><FaChalkboardTeacher /> {course.teacher}</p>
+//       </div>
+
+//       <p className="text-lg text-gray-700 mb-6">{course.description}</p>
+
+//       {joined ? (
+//         <button onClick={handleLeave} className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700">
+//           Leave Course
+//         </button>
+//       ) : (
+//         <button onClick={handleJoin} className="px-6 py-3 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+//           Join Course
+//         </button>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default CourseDetails;
+
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FaChalkboardTeacher, FaBookOpen } from 'react-icons/fa';
+import { useAuth } from '../context/Context.tsx';
+
+const CourseDetails = () => {
+  const { courseId } = useParams();
+  const navigate = useNavigate();
+  const { joinCourse, leaveCourse, isJoined } = useAuth();
+  
+  const [course, setCourse] = useState<any>(null);
+
+  useEffect(() => {
+    // Simulate API fetch
+    setTimeout(() => {
+      setCourse({
+        id: courseId!,
+        title: 'Advanced Web Development',
+        image: 'https://source.unsplash.com/800x400/?coding,technology',
+        teacher: 'John Doe',
+        type: 'Coding',
+        description: 'Master advanced concepts in front-end and back-end web development.',
+      });
+    }, 1000);
+  }, [courseId]);
+
+  const handleJoin = () => {
+    if (course) {
+      joinCourse(course);
+    }
   };
 
+  const handleLeave = () => {
+    if (course) {
+      leaveCourse(course.id);
+    }
+  };
+
+  if (!course) return <div className="text-center mt-10">Loading course details...</div>;
+
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4 text-indigo-600">{course?.title} - Students</h2>
-      <ul className="space-y-4">
-        {course?.students.map((student) => (
-          <li key={student.id} className="flex justify-between items-center border-b pb-2">
-            <div>
-              <p className="font-medium">{student.name}</p>
-              <p className="text-sm text-gray-500">Progress: {student.progress}%</p>
-            </div>
-            {student.progress === 100 && (
-              <button
-                className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 text-sm"
-                onClick={() => generateCertificate(student.name)}
-              >
-                Generate Certificate
-              </button>
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className="max-w-6xl mx-auto p-6">
+      <div className="mb-6">
+        <img src={course.image} alt={course.title} className="w-full rounded-lg shadow-lg" />
+      </div>
+
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">{course.title}</h1>
+      <div className="flex items-center gap-6 text-gray-600 mb-4">
+        <p className="flex items-center gap-2"><FaBookOpen /> {course.type}</p>
+        <p className="flex items-center gap-2"><FaChalkboardTeacher /> {course.teacher}</p>
+      </div>
+
+      <p className="text-lg text-gray-700 mb-6">{course.description}</p>
+
+      {isJoined(course.id) ? (
+        <button
+          onClick={handleLeave}
+          className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700"
+        >
+          Leave Course
+        </button>
+      ) : (
+        <button
+          onClick={handleJoin}
+          className="px-6 py-3 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+        >
+          Join Course
+        </button>
+      )}
     </div>
   );
 };
 
-export default CourseDetailsPage;
+export default CourseDetails;
+
