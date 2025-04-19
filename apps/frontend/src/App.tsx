@@ -1,9 +1,9 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import {  Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import TeacherNavbar from './components/TeacherNavbar';
 import Footer from './components/Footer';
-import ProtectedRoute from './components/ProtectedRoute.tsx'
+import Aitagging from "./pages/Aitaggingpage"
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import About from './pages/About';
@@ -22,6 +22,7 @@ import { Lobby } from './pages/VCLobby.tsx';
 import CourseProgress from './pages/CourseProgress.tsx';
 import CloudinaryVideoGallery from './pages/AllVideos.tsx';
 import Uploader from './pages/UploadVideo.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -64,8 +65,8 @@ const App: React.FC = () => {
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
            <Route path="/profile" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
-          {/* <Route path="/profile/:courseId" element={<CourseProgress />} /> */}
-
+          <Route path="/profile/:courseId" element={<CourseProgress />} />
+            <Route path="/aitagging" element={<Aitagging />} />
           <Route path="/profile-student" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
           <Route path="/uploads" element={<Uploader/>} />
