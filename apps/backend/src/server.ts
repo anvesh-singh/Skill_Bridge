@@ -108,7 +108,6 @@ app.post("/api/recommend", async (req: Request, res: Response) => {
   }
 });
 //*************************** ML SERVER***************************************
-<<<<<<< HEAD
 
 
 const allowedOrigins = [
@@ -135,16 +134,6 @@ app.use(cors({
 //   next();
 // });
 
-=======
-app.use(cors({
-  credentials: true,
-  origin: "http://localhost:5173",
-}));
-app.use(cors({
-  credentials: true,
-  origin: "http://localhost:5000",
-}));
->>>>>>> 56d0d503ccae353aa176dfb0148ea99fcf711a75
 
 app.use(bodyparser.json());
 app.use("/", mainrouter);
