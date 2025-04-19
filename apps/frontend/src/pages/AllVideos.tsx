@@ -16,9 +16,12 @@ const CloudinaryVideoGallery = () => {
   useEffect(() => {
     const fetchVideos = async (courseName : any) => {
       try {
-        const res = await axios.get<{ videos: Video[] }>('http://localhost:3000/api/videos/getCloudinaryVideos', {
-          params: { folder: courseName }
-        });        
+        const res = await axios.get<{ videos: Video[] }>('http://localhost:3000/api/videos/getCloudinaryVideos'
+        //   , {
+        //   params: { folder: courseName }
+        
+        // }
+      );        
         setVideos(res.data.videos);
       } catch (error) {
         console.error('Error fetching videos', error);

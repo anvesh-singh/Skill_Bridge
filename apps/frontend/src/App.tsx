@@ -19,14 +19,8 @@ import { Toaster } from 'react-hot-toast';
 import { useAuth } from './context/Context.tsx';  // Make sure this path is correct
 import ProfileTeacher from './pages/ProfileTeacher.tsx';
 import { Lobby } from './pages/VCLobby.tsx';
-<<<<<<< HEAD
-import CourseProgress from './pages/CourseProgress.tsx';
-import CloudinaryVideoGallery from './pages/AllVideos.tsx';
-import Uploader from './pages/UploadVideo.tsx';
-=======
 import Uploader from './pages/UploadVideo.tsx';
 import CloudinaryVideoGallery from './pages/AllVideos.tsx';
->>>>>>> a7d0186b018259056b9c2ba3efc8141f0725728f
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -57,7 +51,7 @@ const App: React.FC = () => {
           <Route path="/profile-teacher" element={<ProfileTeacher/>} />
            <Route path="/profile" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
-          <Route path="/profile/:courseId" element={<CourseProgress />} />
+          {/* <Route path="/profile/:courseId" element={<CourseProgress />} /> */}
 
           <Route path="/profile-student" element={<StudentProfile/>} />
           <Route path="/teacherhome" element={<TeacherHome/>} />
