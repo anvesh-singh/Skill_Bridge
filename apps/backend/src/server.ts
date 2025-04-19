@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-import path from "path";
-import { spawn } from "child_process";
+import bodyparser from "body-parser";
+import mainrouter from "./routes/mainrouter";
+import dotenv from 'dotenv';
+import { spawn } from 'child_process';
 
 dotenv.config();
 
@@ -105,8 +106,19 @@ app.post("/api/recommend", async (req: Request, res: Response) => {
     res.status(500).json({ error: e.message });
   }
 });
+//*************************** ML SERVER***************************************
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:5173",
+}));
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:5000",
+}));
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+app.use(bodyparser.json());
+app.use("/", mainrouter);
+app.listen(process.env.PORT, (err) => {
+  if (err) console.log("error ocurred");
+  console.log(`app is listening on port ${process.env.PORT}`);
 });

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Menu, X, User, LogOut } from 'lucide-react'
+import { Menu, X, User, LogOut, Cookie } from 'lucide-react'
 import toast from 'react-hot-toast'
+import Cookies from 'js-cookie';
+
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -10,7 +12,7 @@ const navigate = useNavigate();
 
 const handleLogout = () => {
   setIsLoggedIn(false);
-  localStorage.removeItem('token'); // if you're storing a token
+  Cookies.remove('token'); // if you're storing a token
   toast.success("Logged out successfully!");
   navigate('/login');
 };

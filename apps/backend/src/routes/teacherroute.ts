@@ -13,7 +13,9 @@ teacherrouter.get('/getuser', async (req, res) => {
     const token = req.cookies.jwt; // Retrieve token from cookies
 
     if (!token) {
-        return res.status(401).json({ msg: 'No token provided' });
+        return res.status(401).json({ msg: 'No token provided',
+            type : "teachergetuser"
+         });
     }
 
     try {
