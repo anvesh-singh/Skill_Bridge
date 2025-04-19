@@ -108,7 +108,6 @@ app.post("/api/recommend", async (req: Request, res: Response) => {
   }
 });
 //*************************** ML SERVER***************************************
-<<<<<<< HEAD
 
 
 const allowedOrigins = [
