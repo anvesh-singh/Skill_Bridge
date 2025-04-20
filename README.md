@@ -125,4 +125,33 @@ npm run dev
 
 [**Bishal Kedia**](https://github.com/BishalKedia)
 
+## Demo Video Link:
+  <a href="(https://drive.google.com/file/d/1xJAKGlij6bPY7EeGWsscXCE8PAzo190G/view?usp=drive_link)">https://youtu.be/dQw4w9WgXcQ</a>
+
+
+## Presentation Link:
+  <a href="(https://drive.google.com/file/d/1GsuxBbHSYMyTQG5rpQq_6YLrTxJu1eOE/view?usp=sharing)"> PPT link here </a>
+   <a href="([https://drive.google.com/file/d/1xJAKGlij6bPY7EeGWsscXCE8PAzo190G/view?usp=drive_link](https://drive.google.com/file/d/1GsuxBbHSYMyTQG5rpQq_6YLrTxJu1eOE/view?usp=sharing))">https://youtu.be/dQw4w9WgXcQ</a>
+
+     
+## Table of Contents:
+
+## Technology Stack:
+  1) Node.js
+  2) MongoDB
+  3) Express.js
+  4) React.js
+  5) Typecript
+  6) Google Collab
+  7) WebSocket
+  8) Multer
+  9) WebRTC
+  10) Machine Learning
+  11) Tensorflow
+  12) Keras
+  13) USE
+  14) KNN
+  
+
+
 
