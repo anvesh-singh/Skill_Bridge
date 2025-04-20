@@ -13,10 +13,8 @@
 <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF.svg?style=flat-square&logo=GitHub-Actions&logoColor=white" alt="GitHub%20Actions" />
 <img src="https://img.shields.io/badge/JSON-000000.svg?style=flat-square&logo=JSON&logoColor=white" alt="JSON" />
 </p>
-<img src="https://img.shields.io/github/license/idosal/assistant-chat-gpt?style=flat-square&color=5D6D7E" alt="GitHub license" />
-<img src="https://img.shields.io/github/last-commit/idosal/assistant-chat-gpt?style=flat-square&color=5D6D7E" alt="git-last-commit" />
-<img src="https://img.shields.io/github/commit-activity/m/idosal/assistant-chat-gpt?style=flat-square&color=5D6D7E" alt="GitHub commit activity" />
-<img src="https://img.shields.io/github/languages/top/idosal/assistant-chat-gpt?style=flat-square&color=5D6D7E" alt="GitHub top language" />
+
+  <a href="https://hack36.com"> <img src="https://i.postimg.cc/FFwvfkGk/built-at-hack36.png" height=24px> </a>
 </div>
 
 ## 📖 Table of Contents
