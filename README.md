@@ -126,12 +126,13 @@ npm run dev
 [**Bishal Kedia**](https://github.com/BishalKedia)
 
 ## Demo Video Link:
-  <a href="(https://drive.google.com/file/d/1xJAKGlij6bPY7EeGWsscXCE8PAzo190G/view?usp=drive_link)">https://youtu.be/dQw4w9WgXcQ</a>
+[Click here to view the video](https://drive.google.com/file/d/1xJAKGlij6bPY7EeGWsscXCE8PAzo190G/view?usp=drive_link)
 
 
 ## Presentation Link:
-  <a href="(https://drive.google.com/file/d/1GsuxBbHSYMyTQG5rpQq_6YLrTxJu1eOE/view?usp=sharing)"> PPT link here </a>
-   <a href="([https://drive.google.com/file/d/1xJAKGlij6bPY7EeGWsscXCE8PAzo190G/view?usp=drive_link](https://drive.google.com/file/d/1GsuxBbHSYMyTQG5rpQq_6YLrTxJu1eOE/view?usp=sharing))">https://youtu.be/dQw4w9WgXcQ</a>
+
+[Click here to view the presentation](https://drive.google.com/file/d/1GsuxBbHSYMyTQG5rpQq_6YLrTxJu1eOE/view?usp=sharing)
+
 
      
 ## Table of Contents:
