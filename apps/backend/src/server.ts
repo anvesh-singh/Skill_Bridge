@@ -140,6 +140,24 @@ app.post("/api/recommend", async (req: Request, res: Response) => {
 
 
 
+// app.use((req, res, next) => {
+//   console.log(`[${req.method}] ${req.url}`);
+//   next();
+// });
+// app.use(cors({
+//   origin: "http://localhost:5173",
+//   credentials: true,
+// }));
+// app.use(cors({
+//   credentials: true,
+//   origin: "http://localhost:5000",
+// }));
+
+app.use(bodyparser.json());
+app.use("/", mainrouter);
+app.listen(process.env.PORT, (err) => {
+  if (err) console.log("error ocurred");
+  console.log(`app is listening on port ${process.env.PORT}`);
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.url}`);
   next();

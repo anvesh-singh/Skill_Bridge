@@ -19,9 +19,9 @@
 
 //   // Utility to get cookies
 //   const getCookie = (name: string) => {
-//     const value = ; ${document.cookie};
+//     const value = `; ${document.cookie}`;
 //     console.log("hi",document.cookie)
-//     const parts = value.split(; ${name}=);
+//     const parts = value.split(`; ${name}=`);
 //     if (parts.length === 2) return parts.pop()?.split(';').shift();
 //     return null;
 //   };
@@ -30,7 +30,7 @@
 //     try {
 //       // Step 1: Attempt login
 //       const loginResponse = await axios.post(
-//         ${BACKEND_URL}/signin,
+//         `${BACKEND_URL}/signin`,
 //         { email, password },
 //         { withCredentials: true }
 //       );
@@ -311,3 +311,4 @@ const Login = () => {
 };
 
 export default Login;
+
