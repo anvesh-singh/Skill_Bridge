@@ -52,6 +52,10 @@ const courseSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  averageRating: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export const CourseModel = mongoose.model("Course", courseSchema);

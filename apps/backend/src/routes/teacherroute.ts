@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { TeacherModel } from '../database/teacherschema';
 import { StudentModel } from '../database/studentschema';
-import { courseModel } from '../database/courseschema'; // Import your course model
+import { CourseModel } from '../database/courseschema'; // Import your course model
 dotenv.config();
 
 const teacherrouter = express.Router();
-
+const SECRET=process.env.JWT_SECRET;
 teacherrouter.get('/getuser', async (req, res) => {
     const token = req.cookies.jwt; // Retrieve token from cookies
 
@@ -38,6 +38,78 @@ teacherrouter.get('/getuser', async (req, res) => {
         }
         return res.status(500).json({ msg: 'Internal server error' });
     }
+});
+
+
+teacherrouter.get('/getdetails', async (req, res) => {
+  const token = req.cookies.jwt; // Retrieve token from cookies
+
+  if (!token) {
+      return res.status(401).json({ msg: 'No token provided',
+          type : "teachergetuser"
+       });
+  }
+
+  try {
+      // Verify the token
+      const decoded = jwt.verify(token, SECRET) as { id: string };
+      const userId = decoded.id;
+
+      // Fetch the teacher from the database
+      const teacher = await TeacherModel.findById(userId);
+      const courses = await CourseModel.find({ instructor: teacher._id }).populate('students');
+
+    // 2. Count total students across all courses (unique if needed)
+    let totalStudents = 0;
+    courses.forEach(course => {
+      totalStudents += course.students.length;
+    });
+
+      if (!teacher) {
+          return res.status(404).json({ msg: 'Teacher not found' });
+      }
+
+      return res.status(200).json({ totalStudents });
+  } catch (error) {
+      console.error('Error fetching teacher:', error);
+      if (error.name === 'JsonWebTokenError') {
+          return res.status(401).json({ msg: 'Invalid token' });
+      }
+      return res.status(500).json({ msg: 'Internal server error' });
+  }
+});
+
+
+
+teacherrouter.get('/getteachercourses', async (req, res) => {
+  const token = req.cookies.jwt; // Retrieve token from cookies
+  if (!token) {
+      return res.status(401).json({ msg: 'No token provided',
+          type : "teachergetuser"
+       });
+  }
+
+  try {
+      // Verify the token
+      const decoded = jwt.verify(token, SECRET) as { id: string };
+      const userId = decoded.id;
+      // Fetch the teacher from the database
+      const teacher = await TeacherModel.findById(userId);
+      const courses = await CourseModel.find({ instructor: teacher._id });
+    // 2. Count total students across all courses (unique if needed)
+
+      if (!teacher) {
+          return res.status(404).json({ msg: 'Teacher not found' });
+      }
+
+      return res.status(200).json({ courses });
+  } catch (error) {
+      console.error('Error fetching teacher:', error);
+      if (error.name === 'JsonWebTokenError') {
+          return res.status(401).json({ msg: 'Invalid token' });
+      }
+      return res.status(500).json({ msg: 'Internal server error' });
+  }
 });
 
 
@@ -83,6 +155,7 @@ teacherrouter.post("/addcourse", async (req, res) => {
       isLive,
       resources,
       instructor: teacherId,
+      instructorName:teacher.name
     });
 
     const savedCourse = await course.save();
@@ -126,13 +199,6 @@ teacherrouter.get('/search', async (req, res) => {
     }
 });
 
-
-// Create a new course (Only teachers can create courses)
-teacherrouter.post('/create-course', async (req, res) => {
-    const { title, description, tags, price, schedule, difficulty } = req.body;
-    // Your logic to create a course
-    res.status(201).json({ msg: 'Course created successfully' });
-});
 
 // Add other teacher-specific routes here...
 
