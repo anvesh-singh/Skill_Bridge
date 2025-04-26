@@ -2,6 +2,11 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { decodeToken } from 'react-jwt';
 import Cookies from 'js-cookie';
+import axios from 'axios';
+
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 // ----------- Types ------------
 type Course = {
@@ -127,25 +132,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Course management functions
-  const joinCourse = (course: Course) => {
-    setJoinedCourses(prev => {
-      const alreadyJoined = prev.some(c => c.id === course.id);
-      return alreadyJoined ? prev : [...prev, course];
-    });
-    
-    // Save joined courses to localStorage for persistence
-    const updatedCourses = joinedCourses.some(c => c.id === course.id) 
-      ? joinedCourses 
-      : [...joinedCourses, course];
-    localStorage.setItem(`joinedCourses_${userId}`, JSON.stringify(updatedCourses));
+  const joinCourse =  (course: Course) => {
+    const alreadyJoined = joinedCourses.some(c => c._id === course._id);
+    if (alreadyJoined) return;
+  
+    try {
+       axios.post(
+        `${BACKEND_URL}/join-course`,
+        { courseId: course._id },
+        { withCredentials: true }
+      ).then(()=>{
+        setJoinedCourses(prev => [...prev, course]);
+      });
+    } catch (e) {
+      console.error('Failed to join course:', e);
+    }
   };
-
-  const leaveCourse = (courseId: string) => {
-    setJoinedCourses(prev => {
-      const updatedCourses = prev.filter(course => course.id !== courseId);
-      localStorage.setItem(`joinedCourses_${userId}`, JSON.stringify(updatedCourses));
-      return updatedCourses;
-    });
+  
+  const leaveCourse = async (course: Course) => {
+    const alreadyJoined = joinedCourses.some(c => c._id === course._id);
+    if (!alreadyJoined) return;
+    try {
+      await axios.post(
+        `${BACKEND_URL}/leave-course`,
+        { courseId: course._id },
+        { withCredentials: true }
+      );
+      setJoinedCourses(prev => prev.filter(c => c._id !== course._id));
+    } catch (e) {
+      console.error('Failed to leave course:', e);
+    }
   };
 
   const isJoined = (courseId: string) => {

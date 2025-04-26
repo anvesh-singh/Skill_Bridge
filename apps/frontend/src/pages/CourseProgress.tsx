@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaCertificate, FaPrint } from 'react-icons/fa';
+import axios from 'axios';
 
-const mockProgressData: Record<string, { title: string; progress: number; completed: boolean }> = {
-  '1': { title: 'React Fundamentals', progress: 100, completed: true },
-  '2': { title: 'TypeScript Basics', progress: 75, completed: false },
-  '3': { title: 'Advanced CSS', progress: 100, completed: true },
-};
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 const CourseProgress: React.FC = () => {
+  const [course,setcourse]=useState({});
   const { courseId } = useParams<{ courseId: string }>();
-  const course = mockProgressData[courseId || ''];
+
+  useEffect(()=>{
+    const fetchcourses=async()=>{
+      try{
+      const res=await axios.get(`${BACKEND_URL}/getcourse/${courseId}`)
+      setcourse(res.data.course);
+      }
+      catch(e){
+        console.log(e);
+      }
+    }
+    fetchcourses().then();
+  },[]);
 
   if (!course) {
     return <div className="text-center mt-10 text-gray-600">Course not found.</div>;

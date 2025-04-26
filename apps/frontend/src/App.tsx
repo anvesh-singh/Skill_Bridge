@@ -62,19 +62,6 @@ const App: React.FC = () => {
           <Route path="/profile/:courseId" element={<ProtectedRoute><CourseProgress /></ProtectedRoute>} />
           <Route path="/aitagging" element={<ProtectedRoute><Aitagging /></ProtectedRoute>} />
 
-          {/* Duplicate Routes Removed */}
-          {/* Removed duplicate routes for: 
-            - /course/:courseId
-            - /addCourse
-            - /myCourses
-            - /profile-teacher
-            - /profile-student
-            - /teacherhome
-            - /uploads
-            - /getvideos
-            - /lobby
-          */}
-
         </Routes>
       </div>
 
